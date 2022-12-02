@@ -1,22 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from "react";
+import "./App.css";
+
+const initState = {
+  count: 0,
+};
+
+function reducerFunction(state, action) {
+  switch (action.type) {
+    case "INCREMENT":
+      return { count: state.count + 1 };
+    case "DECREMENT":
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+}
 
 function App() {
+  const [state, dispatch] = useReducer(reducerFunction, initState);
+
+  function plusOne() {
+    dispatch({ type: "INCREMENT" });
+  }
+
+  function minusOne() {
+    dispatch({ type: "DECREMENT" });
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1> useReducer Example</h1>
+        <h3>Count: {state.count}</h3>
+        <button onClick={plusOne}>Plus One</button>
+        <button onClick={minusOne}>Minus One</button>
       </header>
     </div>
   );
